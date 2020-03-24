@@ -27,6 +27,6 @@ class GalleryViewModel(application: Application) : AndroidViewModel(application)
 
     private fun gerUrl() = "https://pixabay.com/api/?key=15692633-b1ae233c38b5488a022a3c3fa&q=${keyWords.random()}&per_page=100"
 
-    private val keyWords = arrayOf("cat","dog","pig","pet","space","DOTA2","beauty","sexy","cute","food","sad","building"
+    private val keyWords = arrayOf("cat","dog","pig","pet","space","beauty","sexy","cute","food","sad","building"
     ,"snow","flower")
 }

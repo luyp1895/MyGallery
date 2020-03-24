@@ -34,6 +34,12 @@ class GalleryAdapter: ListAdapter<PhotoItem,GalleryViewHolder>(DIFFCALLBACK){
     }
 
     override fun onBindViewHolder(holder: GalleryViewHolder, position: Int) {
+        with(getItem(position)){
+            holder.itemView.textViewUser.text = photoUser
+            holder.itemView.textViewLikes.text = photoLikes.toString()
+            holder.itemView.textViewFavortis.text = photoFavorites.toString()
+            holder.itemView.imageView_cell.layoutParams.height = previewHeight
+        }
         holder.itemView.shimmerLayout_gallery.apply {
             setShimmerColor(0x55FFFFFF)
             setShimmerAngle(20)

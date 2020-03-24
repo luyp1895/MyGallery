@@ -6,15 +6,16 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import kotlinx.android.synthetic.main.fragment_gallery.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class GalleryFragment : Fragment() {
+const val WRITEEXTERNALSTORAGE_CODE = 1
 
-    private lateinit var galleryViewModel:GalleryViewModel
+class GalleryFragment : Fragment() {
+    private lateinit var galleryViewModel: GalleryViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -25,15 +26,17 @@ class GalleryFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.gallerymenu,menu)
+        inflater.inflate(R.menu.gallerymenu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.refresh -> {
                 swipeRefreshGallery.isRefreshing = true
 
                 galleryViewModel.generateData()
+                recyclerView.scrollToPosition(0)
+
             }
         }
         return super.onOptionsItemSelected(item)
@@ -46,10 +49,13 @@ class GalleryFragment : Fragment() {
         val galleryAdapter = GalleryAdapter()
         recyclerView.apply {
             adapter = galleryAdapter
-            layoutManager = GridLayoutManager(requireContext(),2)
+//            layoutManager = GridLayoutManager(requireContext(),2)
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         }
-        galleryViewModel = ViewModelProvider(this,
-            ViewModelProvider.AndroidViewModelFactory(requireActivity().application))
+        galleryViewModel = ViewModelProvider(
+            this,
+            ViewModelProvider.AndroidViewModelFactory(requireActivity().application)
+        )
             .get(GalleryViewModel::class.java)
 
         galleryViewModel.photoListLive.observe(this, Observer {
@@ -57,12 +63,17 @@ class GalleryFragment : Fragment() {
             swipeRefreshGallery.isRefreshing = false
         })
 
-        galleryViewModel.photoListLive.value?:galleryViewModel.generateData()
+        galleryViewModel.photoListLive.value ?: galleryViewModel.generateData()
 
         swipeRefreshGallery.setOnRefreshListener {
             galleryViewModel.generateData()
+            recyclerView.scrollToPosition(0)
         }
+
+
+
     }
+
 
 
 }

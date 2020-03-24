@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<io.supercharge.shimmerlayout.ShimmerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/shimmerLayout_full"
@@ -12,6 +12,5 @@
         android:id="@+id/photoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#00181616"
-        tools:srcCompat="@tools:sample/avatars" />
-</io.supercharge.shimmerlayout.ShimmerLayout>
+        android:background="#00181616" />
+</FrameLayout>
